@@ -1,0 +1,31 @@
+#!/bin/bash
+
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+HOME=${HOME:-"/home/abc"}
+
+if [ ! "$(id -u abc)" -eq "${PUID}" ]; then 
+	usermod -o -u "${PUID}" abc
+fi
+
+if [ ! "$(id -g abc)" -eq "${PGID}" ]; then 
+	groupmod -o -g "${PGID}" abc
+fi
+
+if [ ! "$(grep abc /etc/passwd | cut -d':' -f6)" == ${HOME} ]; then
+	if [ ! -d ${HOME} ]; then
+		mkdir -p ${HOME}
+		chown abc:abc ${HOME}
+	fi
+	usermod -m -d ${HOME} abc
+fi
+
+echo "
+-----------------------------------
+GID/UID
+-----------------------------------
+User uid:    $(id -u abc)
+User gid:    $(id -g abc)
+User Home:   $(grep abc /etc/passwd | cut -d':' -f6)
+-----------------------------------
+"
