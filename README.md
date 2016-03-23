@@ -1,7 +1,6 @@
 # Alpine baseimage
-
+[![](https://badge.imagelayers.io/bateau/alpine_baseimage:latest.svg)](https://imagelayers.io/?images=bateau/alpine_baseimage:latest 'Get your own badge on imagelayers.io')
 Created on alpine:3.3.
-Very basic image, small footprint (96mb).
 
 Added some features like runit (init.d app).
 Also added a startup script to change Uid, Gid and homedir to user "abc".
