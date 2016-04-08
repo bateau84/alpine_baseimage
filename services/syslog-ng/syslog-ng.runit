@@ -7,7 +7,7 @@ set -e
 if [ ! -S /dev/log ]; then rm -f /dev/log; fi
 if [ ! -S /var/lib/syslog-ng/syslog-ng.ctl ]; then rm -f /var/lib/syslog-ng/syslog-ng.ctl; fi
 
-SYSLOGNG_OPTS=""
+SYSLOGNG_OPTS=${SYSLOGNG_OPTS:-""}
 
 [ -r /etc/default/syslog-ng ] && . /etc/default/syslog-ng
 

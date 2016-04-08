@@ -5,19 +5,23 @@ PGID=${PGID:-1000}
 PAGID=${PAGID:-0}
 PHOME=${PHOME:-"/home/abc"}
 
+# Change UID of user
 if [ ! "$(id -u abc)" -eq "${PUID}" ]; then 
 	usermod -o -u "${PUID}" abc
 fi
 
+# Change GID of user 
 if [ ! "$(id -g abc)" -eq "${PGID}" ]; then 
 	groupmod -o -g "${PGID}" abc
 fi
 
+# Add additional group to user if supplied
 if [ ! "${PAGID}" -eq "0" ]; then
 	groupadd -g ${PAGID} additional
 	usermod -aG additional abc
 fi
 
+# Change home dir of user if supplied
 if [ ! "$(grep abc /etc/passwd | cut -d':' -f6)" == "${PHOME}" ]; then
 	if [ ! -d ${PHOME} ]; then
 		mkdir -p ${PHOME}
@@ -26,6 +30,7 @@ if [ ! "$(grep abc /etc/passwd | cut -d':' -f6)" == "${PHOME}" ]; then
 	usermod -m -d ${PHOME} abc
 fi
 
+# Print info
 echo "
 -----------------------------------
 GID/UID
@@ -33,6 +38,6 @@ GID/UID
 User uid:    $(id -u abc)
 User gid:    $(id -g abc)
 User Home:   $(grep abc /etc/passwd | cut -d':' -f6)
+User info:   $(id abc)
 -----------------------------------
-$(id abc)
 "

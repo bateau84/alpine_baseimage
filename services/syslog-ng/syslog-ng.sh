@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -x
+
 SYSLOG_NG_BUILD_PATH=/bd_build/services/syslog-ng
 
 ## Install a syslog daemon.
