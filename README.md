@@ -1,5 +1,5 @@
 # Alpine baseimage
-[![](https://badge.imagelayers.io/bateau/alpine_baseimage:latest.svg)](https://imagelayers.io/?images=bateau/alpine_baseimage:latest 'Get your own badge on imagelayers.io')
+[![](https://imagelayers.io/badge/bateau/alpine_baseimage:latest.svg)](https://imagelayers.io/?images=bateau/alpine_baseimage:latest)
 Created on alpine:3.3.
 
 Added some features like runit and my_init.d script. (made by [phusion](https://github.com/phusion/baseimage-docker))
