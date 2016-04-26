@@ -15,8 +15,8 @@ Can be changed with -e on docker run.
 
 | Variable | Default | Desc. |
 |:---------|:--------|:------|
-| PUID | "1000" | To change UID of user to launch application(s) |
-| PGID | "1000" | To change GID of user to launch application(s) |
-| PAGID | "" | To append additional group (like docker group) to user to launch application(s) |
-| PHOME | "/home/abc" | To change home dir of user to launch application(s) |
+| PUID | "1000" | To change UID of user "abc" to launch application(s) |
+| PGID | "1000" | To change GID of user "abc" to launch application(s) |
+| PAGID | "" | To append additional group (like docker group) to user "abc" to launch application(s) |
+| PHOME | "/home/abc" | To change home dir of user "abc" to launch application(s) |
 | SYSLOGNG_OPTS | "" | To change startup options of SyslogNG |
