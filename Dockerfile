@@ -1,4 +1,4 @@
-From alpine:3.3
+From alpine:3.4
 
 Add . /bd_build
 
