@@ -1,5 +1,5 @@
 # Alpine baseimage
-Created on alpine:3.4.
+Created on alpine:edge.
 
 Added some features like runit and my_init.d script. (made by [phusion](https://github.com/phusion/baseimage-docker))
 Also added a startup script to change Uid, Gid and homedir to user "abc". (borrowed from [linuxserver](https://github.com/linuxserver)) added posibility to add additional group GAID
