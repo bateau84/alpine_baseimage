@@ -18,7 +18,7 @@ fi
 # Add additional group to user if supplied
 if [ ! "${PAGID}" -eq "0" ]; then
 	groupadd -g ${PAGID} additional
-	usermod -aG additional abc
+	usermod -aG ${PAGID} abc
 fi
 
 # Change home dir of user if supplied
