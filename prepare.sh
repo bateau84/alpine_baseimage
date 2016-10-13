@@ -1,9 +1,9 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
-apk --no-cache update
-apk --no-cache upgrade
+apk update
+apk upgrade
 #apk --no-cache add runit --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 apk --no-cache add python3 alpine-conf wget build-base
 

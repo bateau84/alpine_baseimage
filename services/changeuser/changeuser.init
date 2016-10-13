@@ -1,8 +1,6 @@
 #!/bin/bash
-set -e
-set -x
-
-ls -lah /etc/
+#set -e
+#set -x
 
 PUID=${PUID:-1000}
 PGID=${PGID:-1000}
@@ -19,7 +17,6 @@ fi
 if [ ! "$(id -g abc)" -eq "${PGID}" ]; then
 	sed -i -r 's/^(abc:.*:\d{1,5}:)\d{1,5}(:.*)$/\1'${PGID}'\2/g' /etc/passwd
 	sed -i -r 's/^(abc:.*:)\d{1,6}(:.*)$/\1'${PGID}'\2/g' /etc/group
-	cat /etc/group
 	#groupmod -g "${PGID}" abc || true
 fi
 

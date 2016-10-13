@@ -1,6 +1,6 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
 apk del --purge build-base musl-dev linux-pam-dev cracklib-dev fortify-headers
 

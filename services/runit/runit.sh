@@ -1,6 +1,6 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
 RUNITVERSION="2.1.2"
 RUNITGZIP="runit-${RUNITVERSION}.tar.gz"

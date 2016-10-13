@@ -1,6 +1,6 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
 # Install tools
 #apk --no-cache add shadow --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted

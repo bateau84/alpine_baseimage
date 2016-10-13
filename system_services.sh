@@ -1,6 +1,6 @@
 #!/bin/bash
-set -e
-set -x
+#set -e
+#set -x
 
 ## Install shadow 
 ##/bd_build/services/shadow/shadow.sh
