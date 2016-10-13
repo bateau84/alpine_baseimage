@@ -3,7 +3,7 @@ set -e
 set -x
 
 ## Install shadow 
-/bd_build/services/shadow/shadow.sh
+##/bd_build/services/shadow/shadow.sh
 
 ## Install runit
 /bd_build/services/runit/runit.sh

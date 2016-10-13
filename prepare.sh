@@ -7,6 +7,9 @@ apk --no-cache upgrade
 #apk --no-cache add runit --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 apk --no-cache add python3 alpine-conf wget build-base
 
+## Remove group ping
+delgroup ping
+
 ## Set correct timezone
 setup-timezone -z Europe/Oslo
 

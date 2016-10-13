@@ -6,6 +6,8 @@ RUNITVERSION="2.1.2"
 RUNITGZIP="runit-${RUNITVERSION}.tar.gz"
 RUNITTAR="runit-${RUNITVERSION}.tar"
 
+apk add --no-cache fortify-headers
+
 mkdir -p /package
 chmod 1755 /package
 

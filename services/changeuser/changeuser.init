@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+set -x
+
+ls -lah /etc/
 
 PUID=${PUID:-1000}
 PGID=${PGID:-1000}
@@ -6,28 +10,35 @@ PAGID=${PAGID:-0}
 PHOME=${PHOME:-"/home/abc"}
 
 # Change UID of user
-if [ ! "$(id -u abc)" -eq "${PUID}" ]; then 
-	usermod -o -u "${PUID}" abc
+if [ ! "$(id -u abc)" -eq "${PUID}" ]; then
+	sed -i -r 's/^(abc:.*:)\d{1,5}(:\d{1,5}:.*)$/\1'${PUID}'\2/g' /etc/passwd
+	#usermod -u "${PUID}" abc || true
 fi
 
 # Change GID of user 
-if [ ! "$(id -g abc)" -eq "${PGID}" ]; then 
-	groupmod -o -g "${PGID}" abc
+if [ ! "$(id -g abc)" -eq "${PGID}" ]; then
+	sed -i -r 's/^(abc:.*:\d{1,5}:)\d{1,5}(:.*)$/\1'${PGID}'\2/g' /etc/passwd
+	sed -i -r 's/^(abc:.*:)\d{1,6}(:.*)$/\1'${PGID}'\2/g' /etc/group
+	cat /etc/group
+	#groupmod -g "${PGID}" abc || true
 fi
 
 # Add additional group to user if supplied
 if [ ! "${PAGID}" -eq "0" ]; then
-	groupadd -g ${PAGID} additional
-	usermod -aG ${PAGID} abc
+	addgroup -g ${PAGID} additional || true
+	addgroup abc additional
 fi
 
 # Change home dir of user if supplied
 if [ ! "$(grep abc /etc/passwd | cut -d':' -f6)" == "${PHOME}" ]; then
+	sed -i -r 's/^(abc:.*:\d{1,6}:\d{1,6}:.*:)\/.*(:.*)$/\1'${PHOME//\//\\\/}'\2/g' /etc/passwd
 	if [ ! -d ${PHOME} ]; then
 		mkdir -p ${PHOME}
-		chown abc:abc ${PHOME}
 	fi
-	usermod -m -d ${PHOME} abc
+	
+	chown abc:abc ${PHOME}
+	#fi
+	#usermod -m -d ${PHOME} abc || true
 fi
 
 # Print info
