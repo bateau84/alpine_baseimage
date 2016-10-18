@@ -8,6 +8,9 @@
 ## Install runit
 /bd_build/services/runit/runit.sh
 
+## Install dron
+/bd_build/services/dcron/dcron.sh
+
 ## Install syslog-ng
 /bd_build/services/syslog-ng/syslog-ng.sh
 
