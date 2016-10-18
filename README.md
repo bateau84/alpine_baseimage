@@ -1,8 +1,8 @@
 # Alpine baseimage
-Created on alpine:edge.
+Created on alpine:3.4.
 
-Added some features like runit and my_init.d script. (made by [phusion](https://github.com/phusion/baseimage-docker))
-Also added a startup script to change Uid, Gid and homedir to user "abc". (borrowed from [linuxserver](https://github.com/linuxserver)) added posibility to add additional group GAID
+Added some features like runiti, dcron and my_init.d script. (borrowed from [phusion](https://github.com/phusion/baseimage-docker))
+Also added a startup script to change Uid, Gid and homedir to user "abc". (borrowed from [linuxserver](https://github.com/linuxserver)) added posibility to add additional group with env GAID.
 
 You can use this "abc" user to run your services with setuser command in your init script (located under /etc/service/<app>/run).
 Where run is a executable shell script to start the app.  
