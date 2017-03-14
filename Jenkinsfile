@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build image') {
             steps {
-                sh 'docker build -t bateau/alpine_baseimage:initial'
+                sh 'docker build -t bateau/alpine_baseimage:initial .'
             }
         }
         stage('Retag') {
