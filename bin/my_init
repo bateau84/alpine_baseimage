@@ -246,7 +246,7 @@ def wait_for_runit_or_interrupt(pid):
 
 def shutdown_runit_services():
         if not quite:
-            debug("Begin shutting down runit services...")
+                debug("Begin shutting down runit services...")
         os.system("/sbin/sv down /etc/service/*")
 
 def wait_for_runit_services():
@@ -257,11 +257,11 @@ def wait_for_runit_services():
                 if not done:
                         time.sleep(0.1)
                         # According to https://github.com/phusion/baseimage-docker/issues/315
-			# there is a bug or race condition in Runit, causing it
-			# not to shutdown services that are already being started.
-			# So during shutdown we repeatedly instruct Runit to shutdown
-			# services.
-			shutdown_runit_services(True)
+                        # there is a bug or race condition in Runit, causing it
+                        # not to shutdown services that are already being started.
+                        # So during shutdown we repeatedly instruct Runit to shutdown
+                        # services.
+                        shutdown_runit_services(True)
 
 def main(args):
         import_envvars(False, False)
