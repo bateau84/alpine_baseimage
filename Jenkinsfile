@@ -14,13 +14,13 @@ pipeline {
         }
         stage('Retag') {
             steps {
-                sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:$(env.BUILD_ID)'
+                sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:${env.BUILD_ID}'
 		sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:latest'
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push bateau/alpine_baseimage:$(env.BUILD_ID)'
+                sh 'docker push bateau/alpine_baseimage:${env.BUILD_ID}'
                 sh 'docker push bateau/alpine_baseimage:latest'
             }
         }
