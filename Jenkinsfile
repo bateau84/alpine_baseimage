@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('H H 1,15,30 1-11 *')
+    }
+
     stages {
         stage('Checkout') {
             steps {
