@@ -8,8 +8,5 @@
 ## Install dron
 /bd_build/services/dcron/dcron.sh
 
-## Install syslog-ng
-/bd_build/services/syslog-ng/syslog-ng.sh
-
 ## User for running services
 /bd_build/services/changeuser/changeuser.sh
