@@ -7,23 +7,26 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            node {
+            steps {
                 checkout scm
             }
         }
 
         stage('Build initial image') {
-            node {
+            steps {
                 script {
-                        def dockerImage = docker.build("bateau/alpine_baseimage")
+                    try {
+                        timeout(time: 5, unit: 'MINUTES'){
+                            def dockerImage = docker.build("bateau/alpine_baseimage")
+                        }
+                    }
                 }
             }
         }
 
         stage('Push image') {
-            node {
+            steps {
                 script {
-                    dockerImage.push('${GIT_COMMIT:0:7}-${BUILD_ID}')
                     if (env.BRANCH_NAME == 'master') {
                         dockerImage.push('${GIT_COMMIT:0:7}-${BUILD_ID}')
                         dockerImage.push('latest')
