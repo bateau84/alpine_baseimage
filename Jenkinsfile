@@ -13,9 +13,11 @@ pipeline {
         }
         stage('Build image') {
             steps {
-                sh 'docker build --squash -t bateau/alpine_baseimage:initial .'
+                sh 'printenv'
+                /* sh 'docker build --squash -t bateau/alpine_baseimage:initial .' */
             }
         }
+        /*
         stage('Retag') {
             steps {
                 sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:$BUILD_ID'
@@ -28,5 +30,6 @@ pipeline {
                 sh 'docker push bateau/alpine_baseimage:latest'
             }
         }
+        */
     }
 }
