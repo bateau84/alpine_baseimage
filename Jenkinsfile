@@ -19,6 +19,8 @@ pipeline {
                         timeout(time: 5, unit: 'MINUTES'){
                             def dockerImage = docker.build("bateau/alpine_baseimage")
                         }
+                    } catch (err) {
+                        throw err
                     }
                 }
             }
