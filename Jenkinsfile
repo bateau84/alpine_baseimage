@@ -14,22 +14,28 @@ pipeline {
         stage('Build image') {
             steps {
                 sh 'printenv'
-                /* sh 'docker build --squash -t bateau/alpine_baseimage:initial .' */
+                sh 'docker build --squash -t bateau/alpine_baseimage:$BRANCH_NAME-initial .'
             }
         }
-        /*
         stage('Retag') {
             steps {
-                sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:$BUILD_ID'
-		sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:latest'
+                if (env.BRANCH_NAME == 'master') {
+                    sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:$BUILD_ID'
+		            sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:latest'
+                } else {
+                    sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:$BRANCH_NAME-$BUILD_ID'
+                }
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push bateau/alpine_baseimage:$BUILD_ID'
-                sh 'docker push bateau/alpine_baseimage:latest'
+                if (env.BRANCH_NAME == 'master') {
+                    sh 'docker push bateau/alpine_baseimage:$BUILD_ID'
+                    sh 'docker push bateau/alpine_baseimage:latest'
+                } else {
+                    sh 'docker push bateau/alpine_baseimage:$BRANCH_NAME-$BUILD_ID'
+                }
             }
         }
-        */
     }
 }
