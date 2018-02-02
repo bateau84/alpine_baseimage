@@ -18,21 +18,25 @@ pipeline {
             }
         }
         stage('Retag') {
-            steps {
-                if (env.BRANCH_NAME == 'master') {
+            if (env.BRANCH_NAME == 'master') {
+                steps {
                     sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:$BUILD_ID'
-		            sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:latest'
-                } else {
+                    sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:latest'
+                }
+            } else {
+                steps {
                     sh 'docker tag bateau/alpine_baseimage:$BRANCH_NAME-initial bateau/alpine_baseimage:$BRANCH_NAME-$BUILD_ID'
                 }
             }
         }
         stage('Push') {
-            steps {
-                if (env.BRANCH_NAME == 'master') {
+            if (env.BRANCH_NAME == 'master') {
+                steps {
                     sh 'docker push bateau/alpine_baseimage:$BUILD_ID'
                     sh 'docker push bateau/alpine_baseimage:latest'
-                } else {
+                }
+            } else {
+                steps {
                     sh 'docker push bateau/alpine_baseimage:$BRANCH_NAME-$BUILD_ID'
                 }
             }
