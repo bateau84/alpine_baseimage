@@ -17,7 +17,7 @@ pipeline {
                 script {
                     try {
                         timeout(time: 5, unit: 'MINUTES'){
-                            def dockerImage = docker.build("bateau/alpine_baseimage")
+                            def dockerImage = docker.build('bateau/alpine_baseimage', '--no-cache --squash')
                         }
                     } catch (err) {
                         throw err
