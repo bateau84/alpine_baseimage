@@ -25,7 +25,10 @@ pipeline {
                 script {
                     dockerImage.push('${GIT_COMMIT:0:7}-${BUILD_ID}')
                     if (env.BRANCH_NAME == 'master') {
+                        dockerImage.push('${GIT_COMMIT:0:7}-${BUILD_ID}')
                         dockerImage.push('latest')
+                    } else {
+                        dockerImage.push('${BRANCH_NAME}-${GIT_COMMIT:0:7}-${BUILD_ID}')
                     }
                 }
             }
