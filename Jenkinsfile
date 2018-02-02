@@ -5,8 +5,8 @@ pipeline {
     triggers {
         cron('H H 1,15,30 1-11 *')
     }
-    node {
-        stages {
+    stages {
+        node() {
             stage('Checkout') {
                 steps {
                     checkout scm
