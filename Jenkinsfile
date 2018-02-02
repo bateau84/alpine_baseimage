@@ -1,44 +1,35 @@
 #!groovy
-pipeline {
-    agent any
+properties(
+    [
+        pipelineTriggers([cron('0 * * * *')])
+    ]
+)
 
-    triggers {
-        cron('H H 1,15,30 1-11 *')
-    }
-    stages {
-        node() {
-            stage('Checkout') {
-                steps {
-                    checkout scm
-                }
-            }
-
-            stage('Build initial image') {
-                steps {
-                    script {
-                        try {
-                            timeout(time: 5, unit: 'MINUTES'){
-                                def dockerImage = docker.build('bateau/alpine_baseimage', '--no-cache --squash .')
-                            }
-                        } catch (err) {
-                            throw err
-                        }
-                    }
-                }
-            }
-
-            stage('Push image') {
-                steps {
-                    script {
-                        if (env.BRANCH_NAME == 'master') {
-                            dockerImage.push("${GIT_COMMIT}-${BUILD_ID}")
-                            dockerImage.push("latest")
-                        } else {
-                            dockerImage.push("${BRANCH_NAME}-${GIT_COMMIT}-${BUILD_ID}")
-                        }
-                    }
-                }
-            }
+node() {
+        stage('Checkout') {
+                checkout scm
         }
-    }
+
+        stage('Build initial image') {
+                script {
+                    try {
+                        timeout(time: 5, unit: 'MINUTES'){
+                            def dockerImage = docker.build('bateau/alpine_baseimage', '--no-cache --squash .')
+                        }
+                    } catch (err) {
+                        throw err
+                    }
+                }
+        }
+
+        stage('Push image') {
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        dockerImage.push("${GIT_COMMIT}-${BUILD_ID}")
+                        dockerImage.push("latest")
+                    } else {
+                        dockerImage.push("${BRANCH_NAME}-${GIT_COMMIT}-${BUILD_ID}")
+                    }
+                }
+        }
 }
