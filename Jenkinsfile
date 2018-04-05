@@ -57,7 +57,7 @@ pipeline {
                 branch 'master'
             }
 
-            build job: 'alpine_openjdk', wait: false
+            build job: 'alpine_openjdk/master', wait: false
         }
     }
 }
