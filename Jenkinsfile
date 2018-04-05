@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    env.RELEASES = String(load("releases"), 'UTF-8')
+                    env.RELEASES = String("releases", 'UTF-8')
                     for (String item: env.RELEASES){
                         println item
                     }
