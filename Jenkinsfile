@@ -49,7 +49,7 @@ pipeline {
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         println i+" Building baseimage "+LINES[i]
-                        sh (script: 'sed -i "s/^FROM alpine\:.*$/FROM alpine:${LINES[i]}" Dockerfile')
+                        sh (returnStdout: false, script: 'sed -i "s/^FROM alpine\\:.*$/FROM alpine:${LINES[i]}" Dockerfile')
                         sh (returnStdout: true, script: 'cat Dockerfile')
                         //def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')
                         //baseimage.push()
