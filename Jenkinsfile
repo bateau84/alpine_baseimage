@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent any {
+        node {
+            RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
+        }
+    }
 
     triggers {
         cron('H H 1,15,30 1-11 *')
@@ -13,9 +17,7 @@ pipeline {
         GIT_COMMIT_ID = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         GIT_BRANCH = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").replace(" ", "-").replace("/", "-").replace(".", "-")
     }
-    node {
-        RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
-    }
+    
     stages {
         stage('Prepare') {
             steps {
