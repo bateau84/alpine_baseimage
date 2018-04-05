@@ -1,35 +1,74 @@
-#!groovy
-properties(
-    [
-        pipelineTriggers([cron('0 * * * *')])
-    ]
-)
+#!/usr/bin/env groovy
+pipeline {
+    agent any
 
-node() {
-        stage('Checkout') {
+    triggers {
+        cron('H H 1,15,30 1-11 *')
+    }
+
+    environment {
+        DOCKER_REGISTRY = 'index.docker.io/'
+        DOCKER_REPOSITORY = 'bateau'
+        DOCKER_IMAGE_NAME = 'alpine_baseimage'
+        DOCKER_ARGS = '--no-cache --squash '
+        RELEASE_FILE = 'releases'
+        GIT_COMMIT_ID = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
+        GIT_BRANCH = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").replace(" ", "-").replace("/", "-").replace(".", "-")
+    }
+    
+    stages {
+        stage('Prepare') {
+            steps {
+                echo 'Preparing the build environment'
                 checkout scm
+            }
         }
 
-        stage('Build initial image') {
+        stage('Branch Build') {
+            when {
+                not {
+                    branch 'master'
+                }
+            }
+            steps {
                 script {
-                    try {
-                        timeout(time: 5, unit: 'MINUTES'){
-                            def dockerImage = docker.build('bateau/alpine_baseimage', '--no-cache --squash .')
+                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_BRANCH}-${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
+                    baseimage.push()
+                    env.imageName = baseimage.imageName()
+                }
+            }
+        }
+
+        stage('Master Build') {
+            when {
+                branch 'master'
+            }
+
+            steps {
+                script {
+                    def LINES = new File(env.WORKSPACE, env.RELEASE_FILE).readLines()
+
+                    for(int i = 0; i < LINES.size(); i++) {    
+                        echo "[ "+LINES[i]+" ]"
+                        
+                        sh("""
+                        sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
+                        """)
+
+                        def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}", "${env.DOCKER_ARGS}.")
+                        baseimage.push()
+
+                        if (i == 0){
+                            baseimage.push("latest")
                         }
-                    } catch (err) {
-                        throw err
                     }
                 }
+            }
         }
-
-        stage('Push image') {
-                script {
-                    if (env.BRANCH_NAME == 'master') {
-                        dockerImage.push("${GIT_COMMIT}-${BUILD_ID}")
-                        dockerImage.push("latest")
-                    } else {
-                        dockerImage.push("${BRANCH_NAME}-${GIT_COMMIT}-${BUILD_ID}")
-                    }
-                }
+    }
+    post {
+        always {
+            deleteDir()
         }
+    }
 }
