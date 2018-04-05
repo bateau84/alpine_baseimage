@@ -22,7 +22,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash")
+                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
                 }
             }
             post {
@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}", "--no-cache --squash")
+                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}", "--no-cache --squash .")
                 }
             }
         }
