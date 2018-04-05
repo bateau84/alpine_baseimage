@@ -1,5 +1,5 @@
 pipeline {
-    agent any {
+    agent {
         node {
             RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
         }
