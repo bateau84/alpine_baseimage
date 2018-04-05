@@ -1,7 +1,6 @@
-From alpine:3.7
-MAINTAINER Mats Bergmann <http://github.com/bateau84>
+FROM alpine:3.7
 
-Add . /bd_build
+ADD . /bd_build
 
 RUN apk add --update bash
 RUN bd_build/prepare.sh
