@@ -9,6 +9,7 @@ pipeline {
         DOCKER_REGISTRY = 'index.docker.io/'
         DOCKER_REPOSITORY = 'bateau'
         DOCKER_IMAGE_NAME = 'alpine_baseimage'
+        DOCKER_ARGS = '--no-cache --squash '
     }
 
     stages {
@@ -27,7 +28,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
+                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "${env.DOCKER_ARGS}.")
                     baseimage.push()
                 }
             }
@@ -39,7 +40,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", "--no-cache --squash .")
+                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", "${env.DOCKER_ARGS}.")
                     baseimage.push()
                 }
             }
