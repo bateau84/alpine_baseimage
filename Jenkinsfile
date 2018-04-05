@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    Array LIST = new File('releases').getText('UTF-8').split("\n")
+                    String LIST = new File('releases').getText('UTF-8').split("\n")
                     for(int i = 0; i < LIST.size(); i++) {
                         println LIST[i]
                     }
