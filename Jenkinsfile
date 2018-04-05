@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
+            env.RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
         }
     }
 
