@@ -60,9 +60,9 @@ pipeline {
                         
                         //baseimage.push()
 
-                        //if (i == 0){
-                        //    baseimage.push('latest')
-                        //}
+                        if (i == 0){
+                            println "baseimage.push('latest')"
+                        }
                     }
                 }
             }
