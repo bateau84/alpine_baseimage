@@ -42,11 +42,11 @@ pipeline {
             when {
                 branch 'master'
             }
-            
+
             steps {
                 script {
-                    def FILE = env.WORKSPACE+"/releases"
-                    def LIST = new File(FILE, 'UTF-8')
+                    def FILE = 'releases'
+                    def LIST = new File(env.WORKSPACE, FILE)
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         
