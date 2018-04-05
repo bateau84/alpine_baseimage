@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    RELEASES = Array.load("releases").split('\n')
+                    RELEASES = load("releases").split('\n')
                     for (String item: RELEASES){
                         println item
                     }
