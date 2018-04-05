@@ -48,7 +48,7 @@ pipeline {
                     def LIST = new File(FILE)
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
-                        println i+" Building baseimage "+LINES[i]
+                        println i+" Building baseimage with alpine "+LINES[i]
                         sh("""
                         sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
                         """)
