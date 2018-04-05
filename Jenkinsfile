@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
-                    baseimage.docker.push()
+                    baseimage.push()
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", "--no-cache --squash .")
-                    baseimage.docker.push()
+                    baseimage.push()
                 }
             }
         }
