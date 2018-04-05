@@ -50,7 +50,7 @@ pipeline {
                     //def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         
-                        println i+" Building baseimage with alpine "+LINES[i]
+                        println i+" Building baseimage with alpine version "+LINES[i]
                         
                         sh("""
                         sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
