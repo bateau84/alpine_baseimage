@@ -12,7 +12,7 @@ pipeline {
         DOCKER_ARGS = '--no-cache --squash '
         GIT_COMMIT_ID = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         GIT_BRANCH = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").replace(" ", "-").replace("/", "-").replace(".", "-")
-        RELEASES = asList(readFile("releases"))
+        RELEASES = load("releases").split("\\r?\\n")
     }
     
     stages {
@@ -31,6 +31,7 @@ pipeline {
             }
             steps {
                 script {
+
                     def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_BRANCH}-${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     baseimage.push()
                     env.imageName = baseimage.imageName()
