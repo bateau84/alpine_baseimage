@@ -32,6 +32,7 @@ pipeline {
                 script {
                     def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_BRANCH}-${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     baseimage.push()
+                    env.imageName = baseimage.imageName()
                 }
             }
         }
