@@ -45,7 +45,7 @@ pipeline {
                 script {
                     def LIST = load('releases')
                     LIST.each { rev ->
-                        println rev
+                        sh "echo ${rev}"
                     }
                     //def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     //baseimage.push()
@@ -59,7 +59,7 @@ pipeline {
             deleteDir()
         }
         success {
-            sh("docker rmi -f ${imageName}")
+            //sh("docker rmi -f ${imageName}")
         }
 
     }
