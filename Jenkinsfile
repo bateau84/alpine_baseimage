@@ -44,8 +44,7 @@ pipeline {
             steps {
                 script {
                     def LIST = load('releases')
-                    def RELEASES = String(LIST, 'UTF-8')
-                    for (String rev: RELEASES){
+                    LIST.each { rev ->
                         println rev
                     }
                     //def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
