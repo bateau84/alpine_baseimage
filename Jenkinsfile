@@ -66,9 +66,5 @@ pipeline {
         always {
             deleteDir()
         }
-        //success {
-        //    sh("docker rmi -f ${imageName}")
-        //}
-
     }
 }
