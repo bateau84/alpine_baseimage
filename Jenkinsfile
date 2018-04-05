@@ -42,18 +42,24 @@ pipeline {
             when {
                 branch 'master'
             }
+            
             steps {
                 script {
                     def FILE = env.WORKSPACE+"/releases"
-                    def LIST = new File(FILE)
+                    def LIST = new File(FILE, 'UTF-8')
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
+                        
                         println i+" Building baseimage with alpine "+LINES[i]
+                        
                         sh("""
                         sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
                         """)
+
                         def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')
+                        
                         baseimage.push()
+
                         if (i == 0){
                             baseimage.push('latest')
                         }
