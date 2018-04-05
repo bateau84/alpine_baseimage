@@ -12,9 +12,10 @@ pipeline {
         DOCKER_ARGS = '--no-cache --squash '
         GIT_COMMIT_ID = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         GIT_BRANCH = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").replace(" ", "-").replace("/", "-").replace(".", "-")
+    }
+    node {
         RELEASES = Arrays.asList(readFile('releases').split("\\r?\\n"))
     }
-
     stages {
         stage('Prepare') {
             steps {
