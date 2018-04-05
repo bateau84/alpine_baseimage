@@ -1,4 +1,3 @@
-#!groovy
 pipeline {
     agent any
 
@@ -23,6 +22,7 @@ pipeline {
             steps {
                 script {
                     def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
+                    baseimage.docker.push()
                 }
             }
         }
@@ -34,14 +34,7 @@ pipeline {
             steps {
                 script {
                     def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}", "--no-cache --squash .")
-                }
-            }
-        }
-
-        stage('Push image') {
-            steps {
-                script {
-                    baseimage.push()
+                    baseimage.docker.push()
                 }
             }
         }
@@ -49,6 +42,9 @@ pipeline {
     post {
         always {
             deleteDir()
+            script {
+                sh 'docker system prune -af'
+            }
         }
     }
 }
