@@ -6,27 +6,48 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Prepare') {
             steps {
+                echo 'Preparing the build environment'
+                setVariables()
                 checkout scm
             }
         }
-        stage('Build image') {
+
+        stage('Build') {
+            when {
+                not {
+                    branch 'master'
+                }
+            }
             steps {
-                sh 'docker build --squash -t bateau/alpine_baseimage:initial .'
+                def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}")
+            }
+            post {
+                failure {
+                    slackBuildFailure()
+                }
             }
         }
-        stage('Retag') {
+
+        stage('Master Build') {
+            when {
+                branch 'master'
+            }
             steps {
-                sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:$BUILD_ID'
-		sh 'docker tag bateau/alpine_baseimage:initial bateau/alpine_baseimage:latest'
+                def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}")
             }
         }
-        stage('Push') {
+
+        stage('Push image') {
             steps {
-                sh 'docker push bateau/alpine_baseimage:$BUILD_ID'
-                sh 'docker push bateau/alpine_baseimage:latest'
+                baseimage.push()
             }
+        }
+    }
+    post {
+        always {
+            deleteDir()
         }
     }
 }

@@ -1,4 +1,4 @@
-From alpine:3.6
+From alpine:3.7
 MAINTAINER Mats Bergmann <http://github.com/bateau84>
 
 Add . /bd_build
