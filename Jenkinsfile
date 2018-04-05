@@ -1,3 +1,4 @@
+#!groovy
 pipeline {
     agent any
 
@@ -14,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Branch Build') {
             when {
                 not {
                     branch 'master'
