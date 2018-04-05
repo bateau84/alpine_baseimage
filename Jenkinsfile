@@ -11,6 +11,7 @@ pipeline {
         DOCKER_REPOSITORY = 'bateau'
         DOCKER_IMAGE_NAME = 'alpine_baseimage'
         DOCKER_ARGS = '--no-cache --squash '
+        RELEASE_FILE = 'releases'
         GIT_COMMIT_ID = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         GIT_BRANCH = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").replace(" ", "-").replace("/", "-").replace(".", "-")
     }
@@ -45,9 +46,8 @@ pipeline {
 
             steps {
                 script {
-                    def FILE = 'releases'
-                    def LIST = new File(env.WORKSPACE, FILE)
-                    def LINES = LIST.readLines()
+                    def LINES = new File(env.WORKSPACE, env.RELEASE_FILE).readLines()
+                    //def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         
                         println i+" Building baseimage with alpine "+LINES[i]
