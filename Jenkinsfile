@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        ROCKER_REGISTRY = 'index.docker.io/'
+        DOCKER_REGISTRY = 'index.docker.io/'
         DOCKER_REPOSITORY = 'bateau'
         DOCKER_IMAGE_NAME = 'alpine_baseimage'
     }
@@ -27,7 +27,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
+                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
                     baseimage.docker.push()
                 }
             }
