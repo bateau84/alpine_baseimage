@@ -56,13 +56,13 @@ pipeline {
                         sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
                         """)
 
-                        def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')
+                        //def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')
                         
-                        baseimage.push()
+                        //baseimage.push()
 
-                        if (i == 0){
-                            baseimage.push('latest')
-                        }
+                        //if (i == 0){
+                        //    baseimage.push('latest')
+                        //}
                     }
                 }
             }
