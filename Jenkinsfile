@@ -22,7 +22,9 @@ pipeline {
                 }
             }
             steps {
-                def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}")
+                script {
+                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}")
+                }
             }
             post {
                 failure {
@@ -36,13 +38,17 @@ pipeline {
                 branch 'master'
             }
             steps {
-                def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}")
+                script {
+                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}")
+                }
             }
         }
 
         stage('Push image') {
             steps {
-                baseimage.push()
+                script {
+                    baseimage.push()
+                }
             }
         }
     }
