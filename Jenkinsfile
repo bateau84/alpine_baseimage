@@ -49,11 +49,11 @@ pipeline {
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         println i+" Building baseimage "+LINES[i]
-                        println "def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')"
+                        println 'def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')'
                         //println "baseimage.push()"
-                        //if (i == 0){
-                        //    println "baseimage.push('latest')"
-                        //}
+                        if (i == 0){
+                            println "baseimage.push('latest')"
+                        }
                     }
                     //def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     //baseimage.push()
