@@ -44,6 +44,7 @@ pipeline {
                 script {
                     def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     baseimage.push()
+                    def imageName = baseimage.imageName()
                 }
             }
         }
@@ -53,11 +54,8 @@ pipeline {
             deleteDir()
         }
         success {
-            when {
-                branch 'master'
-            }
-
-            build job: 'alpine_openjdk/master', wait: false
+            sh("docker rmi -f ${imageName}")
         }
+
     }
 }
