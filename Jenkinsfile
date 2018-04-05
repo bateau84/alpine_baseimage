@@ -50,18 +50,18 @@ pipeline {
                     //def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         
-                        println i+" Building baseimage with alpine version "+LINES[i]
+                        echo "[ "+LINES[i]+" ]"
                         
                         sh("""
                         sed -ir "s/^FROM alpine:.*/FROM alpine:${LINES[i]}/g" Dockerfile
                         """)
 
-                        //def baseimage = docker.build('${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}', '${env.DOCKER_ARGS}.')
+                        def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}", "${env.DOCKER_ARGS}.")
                         
-                        //baseimage.push()
+                        baseimage.push()
 
                         if (i == 0){
-                            println "baseimage.push('latest')"
+                            baseimage.push("latest")
                         }
                     }
                 }
