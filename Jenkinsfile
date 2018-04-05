@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent none
 
     triggers {
         cron('H H 1,15,30 1-11 *')
