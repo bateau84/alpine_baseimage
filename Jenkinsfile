@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
     agent any
 
@@ -43,9 +44,10 @@ pipeline {
             }
             steps {
                 script {
-                    String LIST = File('releases').getText('UTF-8').split("\n")
-                    for(int i = 0; i < LIST.size(); i++) {
-                        println LIST[i]
+                    def LIST = new File('${env.WORKSPACE}/releases')
+                    def LINES = LIST.readLines()
+                    for(int i = 0; i < LINES.size(); i++) {
+                        println LINES[i]
                     }
                     //def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.GIT_COMMIT_ID}", "${env.DOCKER_ARGS}.")
                     //baseimage.push()
