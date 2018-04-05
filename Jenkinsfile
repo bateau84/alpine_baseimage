@@ -10,7 +10,6 @@ pipeline {
         stage('Prepare') {
             steps {
                 echo 'Preparing the build environment'
-                setVariables()
                 checkout scm
             }
         }
