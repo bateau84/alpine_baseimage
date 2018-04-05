@@ -5,6 +5,12 @@ pipeline {
         cron('H H 1,15,30 1-11 *')
     }
 
+    environment {
+        ROCKER_REGISTRY = 'index.docker.io/'
+        DOCKER_REPOSITORY = 'bateau'
+        DOCKER_IMAGE_NAME = 'alpine_baseimage'
+    }
+
     stages {
         stage('Prepare') {
             steps {
@@ -21,7 +27,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
+                    def baseimage = docker.build("${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
                     baseimage.docker.push()
                 }
             }
@@ -33,7 +39,7 @@ pipeline {
             }
             steps {
                 script {
-                    def baseimage = docker.build("bateau/alpine_baseimage:${env.BUILD_ID}", "--no-cache --squash .")
+                    def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", "--no-cache --squash .")
                     baseimage.docker.push()
                 }
             }
