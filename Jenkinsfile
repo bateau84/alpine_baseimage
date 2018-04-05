@@ -47,9 +47,8 @@ pipeline {
             steps {
                 script {
                     def LINES = new File(env.WORKSPACE, env.RELEASE_FILE).readLines()
-                    //def LINES = LIST.readLines()
-                    for(int i = 0; i < LINES.size(); i++) {
-                        
+
+                    for(int i = 0; i < LINES.size(); i++) {    
                         echo "[ "+LINES[i]+" ]"
                         
                         sh("""
@@ -57,7 +56,6 @@ pipeline {
                         """)
 
                         def baseimage = docker.build("${env.DOCKER_REGISTRY}${env.DOCKER_REPOSITORY}/${env.DOCKER_IMAGE_NAME}:${LINES[i]}", "${env.DOCKER_ARGS}.")
-                        
                         baseimage.push()
 
                         if (i == 0){
