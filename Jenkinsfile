@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     def LIST = load('releases')
-                    def RELEASES = String(list, 'UTF-8')
+                    def RELEASES = String(LIST, 'UTF-8')
                     for (String rev: RELEASES){
                         println rev
                     }
