@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 script {
-                    def LIST = new File('${env.WORKSPACE}/releases')
+                    def LIST = new File('releases')
                     def LINES = LIST.readLines()
                     for(int i = 0; i < LINES.size(); i++) {
                         println LINES[i]
