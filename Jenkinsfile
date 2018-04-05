@@ -25,11 +25,6 @@ pipeline {
                     def baseimage = docker.build("bateau/alpine_baseimage:${env.BRANCH_NAME}-${env.BUILD_ID}", "--no-cache --squash .")
                 }
             }
-            post {
-                failure {
-                    slackBuildFailure()
-                }
-            }
         }
 
         stage('Master Build') {
