@@ -1,4 +1,4 @@
-[![Build Status](https://mortensrud.sea-shell.no/jenkins/job/bateau84/alpine_baseimage/master/badge/icon)](https://mortensrud.sea-shell.no/jenkins/job/bateau84/alpine_baseimage/master)
+[![Build Status](https://mortensrud.sea-shell.no/jenkins/job/bateau84/job/alpine_baseimage/job/master/badge/icon)](https://mortensrud.sea-shell.no/jenkins/job/bateau84/job/alpine_baseimage/job/master/)
 # Alpine baseimage
 Created on alpine:3.7 (with tags going backwards to 3.3).
 
